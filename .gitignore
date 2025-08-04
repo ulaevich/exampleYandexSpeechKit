@@ -1,0 +1,5 @@
+/.env
+/.venv
+/audio.ogg
+/authorized_key.json
+/__pycache__
