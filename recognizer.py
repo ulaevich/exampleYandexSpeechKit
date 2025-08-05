@@ -1,7 +1,7 @@
 import json
 import base64
 import time
-from iam import token
+
 import httpx
 import aiofiles
 
@@ -16,7 +16,7 @@ async def load_audio_file(filename="audio.ogg"):
 
 
 async def recognize_audio(token: str, content_b64: str, language: str = "ru-RU"):
-    headers = {"Authorization": f"Bearer {token}"}
+    headers = {"Authorization": f"Api-Key {token}"}
     body = {
         "content": content_b64,
         "recognitionModel": {
@@ -51,13 +51,13 @@ async def get_status(iam_token: str, operation_id: str):
     async with httpx.AsyncClient() as client:
         response = await client.get(
             url=f"https://operation.api.cloud.yandex.net/operations/{operation_id}",
-            headers={"Authorization": f"Bearer {iam_token}"},
+            headers={"Authorization": f"Api-Key {iam_token}"},
         )
         return response.json()
 
 
 async def get_recognition_results(iam_token: str, operation_id: str):
-    headers = {"Authorization": f"Bearer {iam_token}"}
+    headers = {"Authorization": f"Api-Key {iam_token}"}
     params = {"operationId": operation_id}
 
     async with httpx.AsyncClient() as client:
